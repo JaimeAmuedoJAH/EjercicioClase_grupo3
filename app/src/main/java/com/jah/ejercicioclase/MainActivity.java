@@ -26,6 +26,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Declaramos variables y componentes de la aplicación.
     RadioGroup rgEquipos;
     RadioButton rbMadrid, rbBarcelona, rbSevilla, rbBetis;
     EditText txtJugador;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        //Asociamos las variables con los elementos de nuestra app.
         rgEquipos = findViewById(R.id.rgEquipos);
         rbMadrid = findViewById(R.id.rbMadrid);
         rbBarcelona = findViewById(R.id.rbBarcelona);
@@ -64,17 +66,19 @@ public class MainActivity extends AppCompatActivity {
         rbPuntuacion = findViewById(R.id.rbPuntuacion);
         spLista = findViewById(R.id.spLista);
 
+        //Primer RadioButton marcado y asociamos el primer array con el spinner(En este caso nuestro primer RadioButton es Madrid).
         rbMadrid.setChecked(true);
-
         mostrarJugadores.addAll(jugadoresMadrid);
-
         adaptador = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, mostrarJugadores);
         spLista.setAdapter(adaptador);
 
+        //Listener de nuestro elemento Button para añadir jugadores a uno de los arrays asociados, llamando al método aniadirJugador().
         btnAniadir.setOnClickListener(view -> aniadirJugador());
 
+        //Listener para el RadioGroup para cambiar el contenido del spinner, llamando al método cambiarContenido().
         rgEquipos.setOnCheckedChangeListener((radioGroup, i) ->  cambiarContenido());
 
+        //Listener para el Spinner para seleccionar cada uno de los jugadores creados, llamamos a los métodos mostrarMedia() y cambiarJugador().
         spLista.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -95,6 +99,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Este método calcula y muestra la puntuación media de los jugadores
+     * del equipo seleccionado.
+     *
+     * - Determina cuál equipo está seleccionado mediante RadioButtons.
+     * - Suma las puntuaciones de todos los jugadores del equipo seleccionado.
+     * - Calcula la media dividiendo la suma total entre el número de jugadores.
+     * - Si no hay jugadores, la media se establece en 0.
+     * - Genera una cadena descriptiva con la puntuación media y la asigna a lblResultado.
+     */
     private void mostrarMedia() {
         String str = "";
         double resultadoPuntuacion = 0.0;
@@ -102,31 +116,58 @@ public class MainActivity extends AppCompatActivity {
             for(int value : puntuacionesMadrid.values()){
                 resultadoPuntuacion += value;
             }
-            resultadoPuntuacion = resultadoPuntuacion / jugadoresMadrid.size();
+            if(!jugadoresMadrid.isEmpty()){
+                resultadoPuntuacion = resultadoPuntuacion / jugadoresMadrid.size();
+            }else{
+                resultadoPuntuacion = 0.0;
+            }
             str = "Los jugadores del " + rbMadrid.getText() + " tienen una media de " + resultadoPuntuacion + " puntos";
         }else if(rbBarcelona.isChecked()){
             for(int value : puntuacionesBarcelona.values()){
                 resultadoPuntuacion += value;
             }
-            resultadoPuntuacion = resultadoPuntuacion / jugadoresMadrid.size();
+
+            if(!jugadoresBarcelona.isEmpty()){
+                resultadoPuntuacion = resultadoPuntuacion / jugadoresBarcelona.size();
+            }else{
+                resultadoPuntuacion = 0.0;
+            }
             str = "Los jugadores del " + rbBarcelona.getText() + " tienen una media de " + resultadoPuntuacion + " puntos";
         }else if(rbSevilla.isChecked()){
             for(int value : puntuacionesSevilla.values()){
                 resultadoPuntuacion += value;
             }
-            resultadoPuntuacion = resultadoPuntuacion / jugadoresMadrid.size();
+
+            if(!jugadoresSevilla.isEmpty()){
+                resultadoPuntuacion = resultadoPuntuacion / jugadoresSevilla.size();
+            }else{
+                resultadoPuntuacion = 0.0;
+            }
             str = "Los jugadores del " + rbSevilla.getText() + " tienen una media de " + resultadoPuntuacion + " puntos";
         }else if(rbBetis.isChecked()){
             for(int value : puntuacionesBetis.values()){
                 resultadoPuntuacion += value;
             }
-            resultadoPuntuacion = resultadoPuntuacion / jugadoresMadrid.size();
+
+            if(!jugadoresBetis.isEmpty()){
+                resultadoPuntuacion = resultadoPuntuacion / jugadoresBetis.size();
+            }else{
+                resultadoPuntuacion = 0.0;
+            }
             str = "Los jugadores del " + rbBetis.getText() + " tienen una media de " + resultadoPuntuacion + " puntos";
         }
 
         lblResultado.setText(str);
     }
 
+    /**
+     * Este método actualiza la puntuación de un jugador en función del equipo seleccionado.
+     *
+     * - Obtiene la puntuación del RatingBar y la asocia con el nombre del jugador en el equipo correspondiente.
+     * - Verifica si la puntuación del jugador es igual a la opción seleccionada en el Spinner.
+     * - Si coincide, reemplaza la puntuación existente con la nueva del RatingBar.
+     * - Finalmente, actualiza la etiqueta lblValoracion con el valor de la puntuación del RatingBar.
+     */
     private void cambiarPuntuacion() {
         int puntuacion = 0;
         if(rbMadrid.isChecked()){
@@ -158,6 +199,14 @@ public class MainActivity extends AppCompatActivity {
         lblValoracion.setText(valor + "");
     }
 
+    /**
+     * Este método actualiza el nombre del jugador y su valoración basándose en la selección del Spinner.
+     *
+     * - Obtiene el elemento seleccionado del Spinner y lo convierte a una cadena.
+     * - Obtiene la valoración actual del RatingBar.
+     * - Actualiza el texto de lblValoracion con la puntuación del RatingBar.
+     * - Actualiza el texto de lblNombreJugador con el nombre del jugador seleccionado en el Spinner.
+     */
     private void cambiarJugador() {
         spLista.getSelectedItem();
         String str = spLista.getSelectedItem().toString();
@@ -166,6 +215,16 @@ public class MainActivity extends AppCompatActivity {
         lblNombreJugador.setText(str);
     }
 
+    /**
+     * Este método actualiza el contenido del Spinner basado en el equipo seleccionado.
+     *
+     * - Verifica cuál equipo está seleccionado mediante RadioButtons.
+     * - Limpia la lista de jugadores mostrados.
+     * - Añade a la lista de jugadores mostrados los jugadores del equipo seleccionado.
+     * - Crea un nuevo adaptador con la lista de jugadores actualizada.
+     * - Establece el adaptador actualizado en el Spinner.
+     * - Llama al método mostrarMedia() para actualizar la media de puntuaciones.
+     */
     private void cambiarContenido() {
 
         if(rbMadrid.isChecked()){
@@ -187,8 +246,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         spLista.setAdapter(adaptador);
+        mostrarMedia();
     }
 
+    /**
+     * Este método añade un nuevo jugador a la lista del equipo seleccionado.
+     *
+     * - Obtiene el nombre del jugador desde un campo de texto (txtJugador).
+     * - Verifica cuál equipo está seleccionado mediante RadioButtons.
+     * - Añade el nombre del jugador a la lista correspondiente del equipo.
+     * - Llama al método cambiarContenido() para actualizar el contenido del Spinner y mostrar la media.
+     * - Limpia el campo de texto (txtJugador).
+     */
     private void aniadirJugador() {
         String str = txtJugador.getText().toString();
         if(rbMadrid.isChecked()){
@@ -204,5 +273,6 @@ public class MainActivity extends AppCompatActivity {
             jugadoresBetis.add(str);
             cambiarContenido();
         }
+        txtJugador.setText("");
     }
 }
