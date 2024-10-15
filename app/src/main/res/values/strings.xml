@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EjercicioClase</string>
+    <string name="lblElegir">Elige un equipo:</string>
+    <string name="rbMadrid">Real Madrid</string>
+    <string name="rbSevilla">Sevilla FC</string>
+    <string name="rbBarcelona">Barcelona</string>
+    <string name="rbBetis">Real Betis FC</string>
+    <string name="hintJugador">Añade un jugador</string>
+    <string name="btnAñadir">Añadir</string>
+</resources>
