@@ -3,8 +3,6 @@ package com.jah.ejercicioclase;
 
 
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -34,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     TextView lblNombreJugador, lblValoracion, lblResultado;
     RatingBar rbPuntuacion;
     Spinner spLista;
-    ArrayAdapter adaptador;
+    ArrayAdapter <String>adaptador;
     HashSet<String> jugadoresMadrid = new HashSet<>();
     HashSet<String> jugadoresBarcelona = new HashSet<>();
     HashSet<String> jugadoresSevilla = new HashSet<>();
@@ -102,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Este método calcula y muestra la puntuación media de los jugadores
      * del equipo seleccionado.
-     *
      * - Determina cuál equipo está seleccionado mediante RadioButtons.
      * - Suma las puntuaciones de todos los jugadores del equipo seleccionado.
      * - Calcula la media dividiendo la suma total entre el número de jugadores.
@@ -162,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Este método actualiza la puntuación de un jugador en función del equipo seleccionado.
-     *
      * - Obtiene la puntuación del RatingBar y la asocia con el nombre del jugador en el equipo correspondiente.
      * - Verifica si la puntuación del jugador es igual a la opción seleccionada en el Spinner.
      * - Si coincide, reemplaza la puntuación existente con la nueva del RatingBar.
@@ -201,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Este método actualiza el nombre del jugador y su valoración basándose en la selección del Spinner.
-     *
      * - Obtiene el elemento seleccionado del Spinner y lo convierte a una cadena.
      * - Obtiene la valoración actual del RatingBar.
      * - Actualiza el texto de lblValoracion con la puntuación del RatingBar.
@@ -217,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Este método actualiza el contenido del Spinner basado en el equipo seleccionado.
-     *
      * - Verifica cuál equipo está seleccionado mediante RadioButtons.
      * - Limpia la lista de jugadores mostrados.
      * - Añade a la lista de jugadores mostrados los jugadores del equipo seleccionado.
@@ -251,7 +244,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Este método añade un nuevo jugador a la lista del equipo seleccionado.
-     *
      * - Obtiene el nombre del jugador desde un campo de texto (txtJugador).
      * - Verifica cuál equipo está seleccionado mediante RadioButtons.
      * - Añade el nombre del jugador a la lista correspondiente del equipo.
